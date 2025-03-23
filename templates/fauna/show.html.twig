@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title "Faune :" ~ fauna.name %}
+
+
+{% block body %}
+{{ include('partials/header.html.twig') }}
+
+    <h1>{{ fauna.name }}</h1>
+    
+    <p> 
+        {{ fauna.content | nl2br }} 
+    </p>
+
+
+{{ include('partials/footer.html.twig') }}
+{% endblock %}
