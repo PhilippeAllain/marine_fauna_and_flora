@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/admin.html.twig' %}
 
 {% block title %}La faune marine{% endblock %}
 
@@ -7,7 +7,7 @@
 {{ include('partials/header.html.twig') }}
 
 <p class="mt-5">
-    <a class="btn btn-primary btn-sm" href={{ path('fauna.create') }}>Créer une espèce</a>
+    <a class="btn btn-primary btn-sm" href={{ path('admin.fauna.create') }}>Créer une espèce</a>
 </p>
 
 <table class="table">
@@ -21,11 +21,11 @@
     {% for fauna in faunas %}
         <tr>
         <td>
-             <a href={{ path('fauna.show', {id: fauna.id, slug: fauna.slug}) }}>{{ fauna.name }}</a>
+             <a href={{ path('admin.fauna.edit', {id: fauna.id}) }}>{{ fauna.name }}</a>
         </td>
         <td>
-             <a class="btn btn-primary btn-sm" href={{ path('fauna.edit', {id: fauna.id}) }}>Editer</a>
-             <form method="post" action={{ path('fauna.delete', {id: fauna.id}) }} style="display: inline-block">
+             <a class="btn btn-primary btn-sm" href={{ path('admin.fauna.edit', {id: fauna.id}) }}>Editer</a>
+             <form method="post" action={{ path('admin.fauna.delete', {id: fauna.id}) }} style="display: inline-block">
                 <input type="hidden" name="_method" value="DELETE">
                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ fauna.id) }}">
                 <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>

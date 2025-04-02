@@ -3,6 +3,7 @@
     <a class="navbar-brand" href="{{ url('home') }}">Mon site</a>
     <div class="collapse navbar-collapse"">
       <ul class="navbar-nav">
+      {#}
         <li class="nav-item">
           <a class="nav-link {{ app.current_route == 'home' ? 'active' : '' }}" href="{{ url('home') }}">Accueil</a>
         </li>
@@ -12,6 +13,6 @@
         <li class="nav-item">
           <a class="nav-link {{ app.current_route starts with 'flora.' ? 'active' : '' }}" href="{{ url('flora.index') }}">La flore</a>
         </li>
-      </ul>
+        #}
   </div>
 </nav>

@@ -1,12 +1,12 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/admin.html.twig' %}
 
-{% block title "Faune :" ~ fauna.name %}
+{% block title "Créer une espèce" %}
 
 
 {% block body %}
 {{ include('partials/header.html.twig') }}
 
-    <h1>{{ fauna.name }}</h1>
+    <h1>Créer une nouvelle espèce</h1>
     
 
         {{ form(form) }} 

@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/admin.html.twig' %}
 
 {% block title "Faune :" ~ fauna.name %}
 
@@ -8,10 +8,9 @@
 
     <h1>{{ fauna.name }}</h1>
     
-    <p> 
-        {{ fauna.content | nl2br }} 
-    </p>
 
+        {{ form(form) }} 
+    
 
 {{ include('partials/footer.html.twig') }}
 {% endblock %}
