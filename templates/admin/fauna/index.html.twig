@@ -2,23 +2,21 @@
 
 {% block title %}La faune marine{% endblock %}
 
-
 {% block body %}
-{{ include('partials/header.html.twig') }}
+
 
 <p class="mt-5">
-    <a class="btn btn-primary btn-sm" href={{ path('admin.fauna.create') }}>Créer une espèce</a>
+    <a class="btn btn-success btn-sm" href={{ path('admin.fauna.create') }}>Créer une espèce</a>
 </p>
-
-<table class="table">
-<thead>
-    <tr>
-        <th>Nom</th>
-        <th>Actions</th>
-    </tr>
-</thead>
-<tbody>
-    {% for fauna in faunas %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for fauna in faunas %}
         <tr>
         <td>
              <a href={{ path('admin.fauna.edit', {id: fauna.id}) }}>{{ fauna.name }}</a>

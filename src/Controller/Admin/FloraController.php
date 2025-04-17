@@ -34,7 +34,7 @@ class FloraController extends AbstractController
             $em->persist($flora);
             $em->flush();
             $this->addFlash('success', 'L\'ajout a bien été éffectué');
-            return $this->redirectToRoute('admin/flora.index');
+            return $this->redirectToRoute('admin.flora.index');
         }
         return $this->render('admin/flora/create.html.twig', [
             'form' => $form

@@ -15,14 +15,17 @@
     <body>
     <nav class="navbar bg-primary navbar-expand-lg" data-bs-theme="dark">
         <div class="container-fluid  bg-primary text-white">
-            <a class="navbar-brand" href="{{ path('admin.fauna.index') }}">Administration</a>
+            <a class="navbar-brand" href="#">Administration</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link {{ app.current_route == 'admin.fauna.' ? 'active' : '' }}" href="{{ path('admin.fauna.index') }}">Faune</a>
+                        <a class="nav-link {{ app.current_route starts with 'admin.fauna.' ? 'active' : '' }}" href="{{ path('admin.fauna.index') }}">Faune</a>
                     </li>   
                     <li class="nav-item">
-                        <a class="nav-link {{ app.current_route == 'admin.flora.' ? 'active' : '' }}" href="{{ path('admin.flora.index') }}">Flore</a>
+                        <a class="nav-link {{ app.current_route starts with 'admin.flora.' ? 'active' : '' }}" href="{{ path('admin.flora.index') }}">Flore</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ app.current_route starts with 'admin.glossary.' ? 'active' : '' }}" href="{{ path('admin.glossary.index') }}">Glossaire</a>
                     </li>
                 </ul>
             </div>

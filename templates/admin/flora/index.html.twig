@@ -4,22 +4,21 @@
 
 
 {% block body %}
-{{ include('partials/header.html.twig') }}
+
 
 <p class="mt-5">
-    <a class="btn btn-primary btn-sm" href={{ path('admin.flora.create') }}>Créer une espèce</a>
+    <a class="btn btn-success btn-sm" href={{ path('admin.flora.create') }}>Créer une espèce</a>
 </p>
-
-<table class="table">
-<thead>
-    <tr>
-        <th>Nom</th>
-        <th>Actions</th>
-    </tr>
-</thead>
-<tbody>
-    {% for flora in floras %}
-        <tr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for flora in floras %}
+            <tr>
         <td>
              <a href={{ path('admin.flora.edit', {id: flora.id}) }}>{{ flora.name }}</a>
         </td>

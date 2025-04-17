@@ -1,0 +1,38 @@
+{% extends 'admin/admin.html.twig' %}
+
+{% block title %}Le glossaire{% endblock %}
+
+{% block body %}
+    <h1>Le Glossaire</h1>
+
+<p class="mt-5">
+    <a class="btn btn-success btn-sm" href={{ path('admin.glossary.create') }}>Créer un terme</a> 
+</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Terme</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for glossary in glossaries %}
+            <tr>
+                <td>
+                    <a href={{ path('admin.glossary.edit', {id: glossary.id}) }}>{{ glossary.word }}</a>
+                </td>
+                <td>
+             <a class="btn btn-primary btn-sm" href={{ path('admin.glossary.edit', {id: glossary.id}) }}>Editer</a>
+             <form method="post" action={{ path('admin.glossary.delete', {id: glossary.id}) }} style="display: inline-block">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ glossary.id) }}">
+                <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+            </form>
+        </td>
+            </tr>
+
+        {% endfor %}
+        </tbody>
+    </table>
+        
+{% endblock %}

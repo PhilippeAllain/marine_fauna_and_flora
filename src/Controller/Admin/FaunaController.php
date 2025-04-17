@@ -20,21 +20,23 @@ class FaunaController extends AbstractController
     {
         $faunas = $repository->findAll();
         return $this->render('admin/fauna/index.html.twig', [
-            'faunas' => $faunas,
+            'faunas' => $faunas,            
         ]);
     }
 
-    #[Route('/create', name: 'create')]
-    public function create(Request $request, EntityManagerInterface $em): Response
+    
+
+    #[Route('/create', name: 'create', methods: ['GET', 'POST'])]
+    public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
         $fauna = new Fauna();
         $form = $this->createForm(FaunaType::class, $fauna);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            $em->persist($fauna);
-            $em->flush();
+            $entityManager->persist($fauna);
+            $entityManager->flush();
             $this->addFlash('success', 'L\'ajout a bien été éffectué');
-            return $this->redirectToRoute('admin/fauna.index');
+            return $this->redirectToRoute('admin.fauna.index');
         }
         return $this->render('admin/fauna/create.html.twig', [
             'form' => $form
