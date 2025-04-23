@@ -38,7 +38,6 @@ class GlossaryController extends AbstractController
         }
 
         return $this->render('admin/glossary/create.html.twig', [
-            'glossary' => $glossary,
             'form' => $form,
         ]);
     }

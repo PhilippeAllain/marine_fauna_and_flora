@@ -1,21 +1,15 @@
 {% extends 'admin/admin.html.twig' %}
 
-{% block title %}Glossaire{% endblock %}
+{% block title "Glossaire :" ~ glossary.word %}
 
 {% block body %}
-    <h1>Editer le Glossaire</h1>
 
-    {{ include('admin/glossary/_form.html.twig', {'button_label': 'Modifier'}) }}
+<h1>Editer le Glossaire</h1>
 
+<h2>{{ glossary.word }}</h2>
 
-    {{ include('admin/glossary/_delete_form.html.twig') }}
+    {{ form(form) }}
 
-
-
-    <div class="col-md-12">
-        <div class="d-flex justify-content-center">
-            <a class="btn btn-primary btn-sm my-2" href={{ path('admin.glossary.index') }}>Retour à la liste</a> 
-        </div>
-    </div>
+{{ include('partials/footer.html.twig') }}
 
 {% endblock %}

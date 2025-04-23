@@ -1,15 +1,15 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/admin.html.twig' %}
 
 {% block title "Flore :" ~ flora.name %}
 
-
 {% block body %}
 
-    <h1>{{ flora.name }}</h1>
-    
+<h1>Editer la Flore</h1>
 
-        {{ form(form) }} 
+<h2>{{ flora.name }}</h2>
     
+    {{ form(form) }}  
 
 {{ include('partials/footer.html.twig') }}
+
 {% endblock %}

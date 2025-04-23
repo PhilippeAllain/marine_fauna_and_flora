@@ -1,11 +1,12 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/admin.html.twig' %}
 
 {% block title %}Glossaire{% endblock %}
 
 {% block body %}
     <h1>Créer un terme</h1>
 
-    {{ include('admin/glossary/_form.html.twig') }}
+    {{ form(form) }}
+  
+   {{ include('partials/footer.html.twig') }}
 
-    <a class="btn btn-success btn-sm" href={{ path('admin.glossary.index') }}>Retour à la liste</a>
-{% endblock %}
+   {% endblock %}

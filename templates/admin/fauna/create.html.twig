@@ -2,15 +2,12 @@
 
 {% block title "Créer une espèce" %}
 
-
 {% block body %}
-
 
     <h1>Créer une nouvelle espèce</h1>
     
+    {{ form(form) }} 
 
-        {{ form(form) }} 
+    {{ include('partials/footer.html.twig') }}
     
-
-{{ include('partials/footer.html.twig') }}
 {% endblock %}

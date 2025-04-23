@@ -2,15 +2,14 @@
 
 {% block title "Faune :" ~ fauna.name %}
 
-
 {% block body %}
 
+<h1>Editer la Faune</h1>
 
-    <h1>{{ fauna.name }}</h1>
-    
+<h2>{{ fauna.name }}</h2>
 
-        {{ form(form) }} 
-    
+    {{ form(form) }}  
 
 {{ include('partials/footer.html.twig') }}
+
 {% endblock %}
