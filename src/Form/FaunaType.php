@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Fauna;
+use App\Entity\Faunaspecie;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Event\PreSubmitEvent;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -11,6 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\String\Slugger\AsciiSlugger;
+use Symfony\Config\Doctrine\Orm\EntityManagerConfig\EntityListeners\EntityConfig;
 
 class FaunaType extends AbstractType
 {
@@ -23,8 +26,13 @@ class FaunaType extends AbstractType
             ->add('slug', TextType::class, [
                 'required' => false,
             ])
+            ->add('species', EntityType::class, [
+                'class' => Faunaspecie::class,
+                'choice_label' => 'name',
+                'placeholder' => 'Sélectionner une espèce',
+            ])
             ->add('save', SubmitType::class, [
-                'label' => 'Envoyer',
+                'label' => 'Sauvegarder',
             ])
             ->addEventListener(FormEvents::PRE_SUBMIT, $this->autoSlug(...))
         ;

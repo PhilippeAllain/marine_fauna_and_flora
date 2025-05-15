@@ -13,6 +13,7 @@
         <thead>
             <tr>
                 <th>Nom</th>
+                <th>Espèce</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -21,6 +22,13 @@
             <tr>
         <td>
              <a href={{ path('admin.flora.edit', {id: flora.id}) }}>{{ flora.name }}</a>
+        </td>
+        <td>
+            {% if flora.species is not null %}
+                {{ flora.species.name }}
+            {% else %}
+                Aucune espèce
+            {% endif %}
         </td>
         <td>
              <a class="btn btn-primary btn-sm" href={{ path('admin.flora.edit', {id: flora.id}) }}>Editer</a>

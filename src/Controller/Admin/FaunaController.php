@@ -18,7 +18,7 @@ class FaunaController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(Request $request, FaunaRepository $repository, EntityManagerInterface $em): Response
     {
-        $faunas = $repository->findAll();
+        $faunas = $repository->findAll();;
         return $this->render('admin/fauna/index.html.twig', [
             'faunas' => $faunas,            
         ]);

@@ -20,23 +20,24 @@ class Fauna
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\length(min: 5)]
+    #[Assert\Length(min: 5)]
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\length(min: 5)]
-    #[Assert\Regex(pattern: '/^[a-z-]+(?:-[a-z]+)*$/', message: 'La DCI ne doit contenir que des lettres minuscules, et des tirets.')]
+    #[Assert\Length(min: 5)]
     private ?string $dci = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\length(min: 5)]
-    #[Assert\Regex(pattern: '/^[a-zA-Z0-9-]+(?:-[a-zA-Z0-9]+)*$/', message: 'Le contenu ne doit contenir que des lettres, des chiffres et des tirets.')]
+    #[Assert\Length(min: 5)]
     private ?string $content = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\length(min: 5)]
+    #[Assert\Length(min: 5)]
     #[Assert\Regex(pattern: '/^[a-z0-9-]+(?:-[a-z0-9]+)*$/', message: 'Le slug ne doit contenir que des lettres minuscules, des chiffres et des tirets.')]
     private ?string $slug = null;
+
+    #[ORM\ManyToOne(inversedBy: 'faunas')]
+    private ?Faunaspecie $species = null;
 
     public function getId(): ?int
     {
@@ -87,6 +88,18 @@ class Fauna
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getSpecies(): ?Faunaspecie
+    {
+        return $this->species;
+    }
+
+    public function setSpecies(?Faunaspecie $species): static
+    {
+        $this->species = $species;
 
         return $this;
     }

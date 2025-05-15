@@ -1,0 +1,15 @@
+{% extends 'admin/admin.html.twig' %}
+
+{% block title "Flore :" ~ floraspecie.name %}
+
+{% block body %}
+
+<h1>Editer la Floree</h1>
+
+<h2>{{ floraspecie.name }}</h2>
+
+    {{ form(form) }}  
+
+{{ include('partials/footer.html.twig') }}
+
+{% endblock %}

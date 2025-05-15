@@ -1,0 +1,15 @@
+{% extends 'admin/admin.html.twig' %}
+
+{% block title "Espèce :" ~ faunaspecie.name %}
+
+{% block body %}
+
+<h1>Editer une espèce</h1>
+
+<h2>{{ faunaspecie.name }}</h2>
+
+    {{ form(form) }}  
+
+{{ include('partials/footer.html.twig') }}
+
+{% endblock %}

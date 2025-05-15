@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Flora;
+use App\Entity\Floraspecie;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Event\PreSubmitEvent;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -23,8 +25,13 @@ class FloraType extends AbstractType
             ->add('slug', TextType::class, [
                 'required' => false,
             ])
+            ->add('species', EntityType::class, [
+                'class' => Floraspecie::class,
+                'choice_label' => 'name',
+                'placeholder' => 'Sélectionner une espèce',
+            ])
             ->add('save', SubmitType::class, [
-                'label' => 'Envoyer',
+                'label' => 'Sauvegarder',
             ])
             ->addEventListener(FormEvents::PRE_SUBMIT, $this->autoSlug(...))
         ;
