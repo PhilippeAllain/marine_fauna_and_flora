@@ -24,8 +24,6 @@ class FaunaController extends AbstractController
         ]);
     }
 
-    
-
     #[Route('/create', name: 'create', methods: ['GET', 'POST'])]
     public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -45,12 +43,12 @@ class FaunaController extends AbstractController
 
 
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'], requirements: ['id' => Requirement::DIGITS])]
-    public function edit(Fauna $fauna, Request $request, EntityManagerInterface $em): Response{
+    public function edit(Fauna $fauna, Request $request, EntityManagerInterface $em ): Response{
         $form = $this->createForm(FaunaType::class, $fauna);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $em->flush();
-            $this->addFlash('success', 'La modification a bien été éffectuée');
+            $this->addFlash('success', 'La modification a bien été éffectuée');;
             return $this->redirectToRoute('admin.fauna.index');
         }
         return $this->render('admin/fauna/edit.html.twig', [

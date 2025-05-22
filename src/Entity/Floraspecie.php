@@ -21,7 +21,7 @@ class Floraspecie
     /**
      * @var Collection<int, Flora>
      */
-    #[ORM\OneToMany(targetEntity: Flora::class, mappedBy: 'species')]
+    #[ORM\OneToMany(targetEntity: Flora::class, mappedBy: 'species', cascade: ['remove'])]
     private Collection $floras;
 
     public function __construct()

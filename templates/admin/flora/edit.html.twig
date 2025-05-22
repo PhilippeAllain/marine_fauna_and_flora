@@ -4,11 +4,18 @@
 
 {% block body %}
 
-<h1>Editer la Flore</h1>
+<h1>Editer la Flore : {{ flora.name }}</h1>
 
-<h2>{{ flora.name }}</h2>
+
+<div class="mx-auto p-2" style="width: 300px;">
+   
+
+    <img src={{  vich_uploader_asset(flora, 'thumbnailFile') }} class="img-thumbnail" alt="..." />
+
+</div>
     
     {{ form(form) }}  
+
 
 {{ include('partials/footer.html.twig') }}
 

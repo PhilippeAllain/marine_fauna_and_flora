@@ -13,7 +13,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\String\Slugger\AsciiSlugger;
-use Symfony\Config\Doctrine\Orm\EntityManagerConfig\EntityListeners\EntityConfig;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+
 
 class FaunaType extends AbstractType
 {
@@ -24,8 +25,9 @@ class FaunaType extends AbstractType
             ->add('dci')
             ->add('content')
             ->add('slug', TextType::class, [
-                'required' => false,
+                'required' => false,             
             ])
+            ->add('thumbnailFile', Filetype::class)
             ->add('species', EntityType::class, [
                 'class' => Faunaspecie::class,
                 'choice_label' => 'name',

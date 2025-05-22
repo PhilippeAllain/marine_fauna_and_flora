@@ -4,9 +4,14 @@
 
 {% block body %}
 
-<h1>Editer la Faune</h1>
+<h1>Editer la Faune : {{ fauna.name }}</h1>
 
-<h2>{{ fauna.name }}</h2>
+<div class="mx-auto p-2" style="width: 300px;">
+   
+
+    <img src={{  vich_uploader_asset(fauna, 'thumbnailFile') }} class="img-thumbnail" alt="..." />
+
+</div>
 
     {{ form(form) }}  
 

@@ -6,12 +6,15 @@ use App\Repository\FloraRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: FloraRepository::class)]
 #[UniqueEntity('name')]
 #[UniqueEntity('dci')]
 #[UniqueEntity('slug')]
+#[Vich\Uploadable()]
 class Flora
 {
     #[ORM\Id]
@@ -25,12 +28,10 @@ class Flora
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Length(min: 5)]
-    #[Assert\Regex(pattern: '/^[a-z-]+(?:-[a-z]+)*$/', message: 'La DCI ne doit contenir que des lettres minuscules, et des tirets.')]
     private ?string $dci = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\Length(min: 5)]
-    #[Assert\Regex(pattern: '/^[a-zA-Z0-9-]+(?:-[a-zA-Z0-9]+)*$/', message: 'Le contenu ne doit contenir que des lettres, des chiffres et des tirets.')]
     private ?string $content = null;
 
     #[ORM\Column(length: 255)]
@@ -38,9 +39,15 @@ class Flora
     #[Assert\Regex(pattern: '/^[a-z0-9-]+(?:-[a-z0-9]+)*$/', message: 'Le slug ne doit contenir que des lettres minuscules, des chiffres et des tirets.')]
     private ?string $slug = null;
 
-    #[ORM\ManyToOne(inversedBy: 'floras')]
+    #[ORM\ManyToOne(inversedBy: 'floras', cascade: ['persist'])]
     private ?Floraspecie $species = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $thumbnail = null;
+
+    #[Vich\UploadableField(mapping: 'images', fileNameProperty: 'thumbnail')]
+    #[Assert\Image()]
+    private ?File $thumbnailFile = null;
 
     public function getId(): ?int
     {
@@ -103,6 +110,31 @@ class Flora
     public function setSpecies(?Floraspecie $species): static
     {
         $this->species = $species;
+
+        return $this;
+    }
+
+    public function getThumbnail(): ?string
+    {
+        return $this->thumbnail;
+    }
+
+    public function setThumbnail(?string $thumbnail): static
+    {
+        $this->thumbnail = $thumbnail;
+
+        return $this;
+    }
+
+        public function getThumbnailFile(): ?File
+    {
+        return $this->thumbnailFile;
+    }
+
+
+    public function setThumbnailFile(?File $thumbnailFile): static
+    {
+        $this->thumbnailFile = $thumbnailFile;
 
         return $this;
     }
