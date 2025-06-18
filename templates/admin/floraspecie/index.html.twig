@@ -4,21 +4,36 @@
 
 {% block body %}
 
-<h1>Les espèces vegetales</h1>
+<h1 class="text-center m-3 p-5 border border-3 border-success">Editer la flore</h1>
 
-<p class="mt-5">
-    <a class="btn btn-success btn-sm" href={{ path('admin.floraspecies.create') }}>Créer une espèce</a>
-</p>
+<div class="container px-4 py-5 my-5 bg-light rounded-3 text-center border border-5 border-primary-subtle">
+        <div class="row gx-5">
+            <div class="col-md-12">
+                <h2 class="p-3 m-1 border border-primary">Liste des espèces végétales.</h2>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Vous pouvez créer, modifier ou supprimer des espèces végétales.</p>
+                    </div>
+            <div class="col-md-12 m-3">
+                <a class="btn btn-success btn-sm" href={{ path('admin.floraspecies.create') }}>Créer une espèce</a>
+            </div>
+        </div>
+</div>
+
  <table class="table">
         <thead>
             <tr>
-                <th>Nom</th>
+                <th>{{ knp_pagination_sortable(floraspecies, 'ID', 'f.id') }}</th>
+                <th>{{ knp_pagination_sortable(floraspecies, 'Nom', 'f.name') }}</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for floraspecie in floraspecies %}
         <tr>
+        <td>
+            {{ floraspecie.id }}
+        </td>
         <td>
              <a href={{ path('admin.floraspecies.edit', {id: floraspecie.id}) }}>{{ floraspecie.name }}</a>
         </td>
@@ -35,6 +50,8 @@
        {% endfor %}
 </tbody>
 </table>
+
+{{ knp_pagination_render(floraspecies) }}
 
 {{ include('partials/footer.html.twig') }}
 {% endblock %}

@@ -4,9 +4,46 @@
 
 {% block body %}
 
-    <h1>Créer une nouvelle espèce</h1>
-    
-    {{ form(form) }} 
+    <h1 class="text-center m-3 p-5 border border-3 border-success rounded-3">Créer une nouvelle espèce</h1>
+ {{ form_start(form) }}
+        <div class="mb-5 border border-3 border-success">
+            <div class="row mb-3 ">
+                <div class="col">
+                    {{ form_row(form.name, {'label': 'Nom'}) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.dci, {'label': 'D.C.I.'}) }}
+                </div>
+            </div>
+            <div class="row mb-3 ">
+                <div class="col">
+                    {{ form_row(form.slug, {'label': 'Jeton'}) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.species, {'label': 'Espèce'}) }}
+                </div>
+            </div>     
+        </div>
+        <div class="container mb-5 border border-3 border-success">
+            <div class="row mb-3 ">
+                <div class="col">
+                    {{ form_row(form.content, {'label': 'Description'}) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.thumbnailFile, {'label': 'Image'}) }}
+                </div>
+            </div>
+        </div>
+        <div class="container mb-3">
+            <div class="row mb-3 ">
+                <div class="col">
+            {{ form_row(form.save, {'label': 'Enregistrer les modifications', 'attr': {'class': 'btn btn-success'}}) }}
+                </div>
+            </div>
+        </div>
+        
+
+    {{ form_end(form) }}
 
     {{ include('partials/footer.html.twig') }}
     

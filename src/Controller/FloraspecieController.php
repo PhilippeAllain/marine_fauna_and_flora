@@ -11,15 +11,24 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Requirement\Requirement;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/admin/floraspecies', name: 'admin.floraspecies.')]
+#[IsGranted('ROLE_ADMIN')]
 final class FloraspecieController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(FloraspecieRepository $floraspecies): Response
+    public function index(Request $request,FloraspecieRepository $floraspecies): Response
     {
+        $page = $request->query->getInt('page', 1);
+        $limit = 2; // Number of items per page
+        $floraspecies = $floraspecies->paginateFloraspecies($page, $limit);
+        $maxPage = ceil($floraspecies->getTotalItemCount() / $limit);
+        //dd($species->count());
         return $this->render('admin/floraspecie/index.html.twig', [
-            'floraspecies' => $floraspecies->findAll(),
+            'floraspecies' => $floraspecies,
+            'maxPage' => $maxPage,
+            'page' => $page,
         ]);
     }
 
@@ -61,6 +70,6 @@ final class FloraspecieController extends AbstractController
         $em->remove($floraspecie);
         $em->flush();
         $this->addFlash('success', 'La suppression a bien été éffectuée');
-        return $this->redirectToRoute('admin.faunaspecies.index');
+        return $this->redirectToRoute('admin.floraaspecies.index');
     }
 }

@@ -11,15 +11,24 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Requirement\Requirement;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/admin/faunaspecies', name: 'admin.faunaspecies.')]
-final class FaunaspecieController extends AbstractController
+#[IsGranted('ROLE_ADMIN')]
+class FaunaspecieController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(FaunaspecieRepository $faunaspecies): Response
+    public function index(FaunaspecieRepository $repository, Request $request): Response
     {
+        $page = $request->query->getInt('page', 1);
+        $limit = 2; // Number of items per page
+        $faunaspecies = $repository->paginateFaunaspecies($page, $limit);
+        $maxPage = ceil ( $faunaspecies->getTotalItemCount() / $limit);
+        //dd($species->count());
         return $this->render('admin/faunaspecie/index.html.twig', [
-            'faunaspecies' => $faunaspecies->findAll(),
+            'faunaspecies' => $faunaspecies,
+            'maxPage' => $maxPage,
+            'page' => $page,
         ]);
     }
 

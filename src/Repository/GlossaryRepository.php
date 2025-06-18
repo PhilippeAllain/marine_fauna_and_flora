@@ -4,16 +4,38 @@ namespace App\Repository;
 
 use App\Entity\Glossary;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 
 /**
  * @extends ServiceEntityRepository<Glossary>
  */
 class GlossaryRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private PaginatorInterface $paginator)
     {
         parent::__construct($registry, Glossary::class);
+    }
+
+    public function paginateGlossaries(int $page, int $limit): PaginationInterface
+    {
+        return $this->paginator->paginate(
+            $this->createQueryBuilder('g'),
+            $page,
+            $limit
+        );
+        /*
+        return new Paginator($this
+            ->createQueryBuilder('g')
+            ->setFirstResult(($page - 1) * $limit)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->setHint(Paginator::HINT_ENABLE_DISTINCT, false)
+        );
+        */
     }
 
     //    /**

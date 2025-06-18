@@ -11,14 +11,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/admin/floras', name: 'admin.flora.')]
+#[IsGranted('ROLE_ADMIN')]
 class FloraController extends AbstractController
 {
     #[Route('/', name: 'index')]
     public function index(Request $request, FloraRepository $repository): Response
     {
-        $floras = $repository->findAll();
+        $page = $request->query->getInt('page', 1);
+        $limit = 1; // You can adjust the limit as needed
+        $floras = $repository->paginateFloras($page, $limit);
         return $this->render('admin/flora/index.html.twig', [
             'floras' => $floras,
         ]);

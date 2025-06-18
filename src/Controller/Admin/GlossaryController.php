@@ -11,16 +11,24 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('admin/glossaries', name: 'admin.glossary.')]
+#[IsGranted('ROLE_ADMIN')]
 class GlossaryController extends AbstractController
 {
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(Request $request, GlossaryRepository $repository): Response
     {
-        $glossaries = $repository->findAll();
+        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $page = $request->query->getInt('page', 1);
+        $limit = 2; // Number of items per page
+        $glossaries = $repository->paginateGlossaries($page, $limit);
+        $maxPages = ceil($glossaries->getTotalItemCount() / $limit);
         return $this->render('admin/glossary/index.html.twig', [
             'glossaries' => $glossaries,
+            'maxPages' => $maxPages,
+            'page' => $page,
         ]);
     }
 

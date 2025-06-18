@@ -4,15 +4,31 @@
 
 {% block body %}
 
-<h1>La faune</h1>
+<h1 class="text-center m-3 p-5 border border-3 border-success">La faune marine</h1>
 
-<p class="mt-5">
-    <a class="btn btn-success btn-sm" href={{ path('admin.fauna.create') }}>Créer une espèce</a>
-</p>
+<div class="container px-4 py-5 my-5 bg-light rounded-3 text-center border border-5 border-primary-subtle">
+    <div class="row gx-5">
+        <div class="col-md-12">
+            <h2 class="p-3 m-1 border border-primary">Liste des espèces de la faune marine</h2>
+        </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>Vous pouvez créer, modifier ou supprimer des espèces de la faune marine.</p>
+        </div>
+        <div class="col-md-12 m-3">
+            <a class="btn btn-success btn-sm" href={{ path('admin.fauna.create') }}>Créer une espèce</a>
+        </div>
+    </div>
+</div>
+
+<div class="container text-center mx-auto p-2 border border-primary-subtle rounded-3">
+    <div class="row g-2">
+
     <table class="table">
         <thead>
             <tr>
-                <th>Nom</th>
+                <th>{{ knp_pagination_sortable(faunas, 'ID', 'f.id') }}</th>
+                <th>{{ knp_pagination_sortable(faunas, 'Nom', 'f.name') }}</th>
                 <th>Espèce</th>
                 <th>Actions</th>
             </tr>
@@ -20,6 +36,9 @@
         <tbody>
         {% for fauna in faunas %}
         <tr>
+        <td>
+        {{ fauna.id }}
+        </td>
         <td>
              <a href={{ path('admin.fauna.edit', {id: fauna.id}) }}>{{ fauna.name }}</a>
         </td>
@@ -41,9 +60,28 @@
 
         </tr>
     {% endfor %}
+    </div>
+</div>
 </tbody>
 </table>
 
+{{ knp_pagination_render(faunas) }}
 
+{% if app.session.flashbag.has('success') %}
+    <div class="alert alert-success">
+        {% for message in app.session.flashbag.get('success') %}
+            {{ message }}
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% if app.session.flashbag.has('error') %}
+    <div class="alert alert-danger">
+        {% for message in app.session.flashbag.get('error') %}
+            {{ message }}
+        {% endfor %}
+    </div>
+{% endif %}
+</div>
 {{ include('partials/footer.html.twig') }}
 {% endblock %}

@@ -4,21 +4,36 @@
 
 {% block body %}
 
-<h1>Les espèces animales</h1>
+<h1 class="text-center m-3 p-5 border border-3 border-success">Editer la faune</h1>
 
-<p class="mt-5">
-    <a class="btn btn-success btn-sm" href={{ path('admin.faunaspecies.create') }}>Créer une espèce</a>
-</p>
+<div class="container px-4 py-5 my-5 bg-light rounded-3 text-center border border-5 border-primary-subtle">
+        <div class="row gx-5">
+            <div class="col-md-12">
+                <h2 class="p-3 m-1 border border-primary">Liste des espèces animales.</h2>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Vous pouvez créer, modifier ou supprimer des espèces animales.</p>
+                    </div>
+            <div class="col-md-12 m-3">
+                <a class="btn btn-success btn-sm" href={{ path('admin.faunaspecies.create') }}>Créer une espèce</a>
+            </div>
+        </div>
+</div>
+
  <table class="table">
         <thead>
             <tr>
-                <th>Nom</th>
+                <th>{{ knp_pagination_sortable(faunaspecies, 'ID', 'f.id') }}</th>
+                <th>{{ knp_pagination_sortable(faunaspecies, 'Nom', 'f.name') }}</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for faunaspecie in faunaspecies %}
         <tr>
+        <td>
+            {{ faunaspecie.id }}
+        </td>
         <td>
              <a href={{ path('admin.faunaspecies.edit', {id: faunaspecie.id}) }}>{{ faunaspecie.name }}</a>
         </td>
@@ -35,6 +50,9 @@
        {% endfor %}
 </tbody>
 </table>
+
+{{ knp_pagination_render(faunaspecies) }}
+
 
 {{ include('partials/footer.html.twig') }}
 {% endblock %}

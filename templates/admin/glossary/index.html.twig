@@ -4,26 +4,48 @@
 
 {% block body %}
 
-<h1>Le Glossaire</h1>
+<h1 class="text-center m-3 p-5 border border-3 border-success">Le Glossaire</h1>
 
-<p class="mt-5">
-    <a class="btn btn-success btn-sm" href={{ path('admin.glossary.create') }}>Créer un terme</a> 
-</p>
+<div class="container px-4 py-5 my-5 bg-light rounded-3 text-center border border-5 border-primary-subtle">
+    <div class="row gx-5">
+        <div class="col-md-12">
+            <h2 class="p-3 m-1 border border-primary">Liste des termes</h2>
+        </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>Vous pouvez créer, modifier ou supprimer des termes.</p>
+        </div>
+        <div class="col-md-12 m-3">
+            <a class="btn btn-success btn-sm" href={{ path('admin.glossary.create') }}>Créer une espèce</a>
+        </div>
+    </div>
+</div>
+
+<div class="container text-center mx-auto p-2 border border-primary-subtle rounded-3">
+    <div class="row g-2">
+
     <table class="table">
         <thead>
             <tr>
-                <th>Terme</th>
+                <th>{{ knp_pagination_sortable(glossaries, 'ID', 'g.id') }}</th>
+                <th>{{ knp_pagination_sortable(glossaries, 'Terme', 'g.word') }}</th>
+                <th>Définition</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for glossary in glossaries %}
             <tr>
-                <td>
-                    <a href={{ path('admin.glossary.edit', {id: glossary.id}) }}>{{ glossary.word }}</a>
-                </td>
-                <td>
-             <a class="btn btn-primary btn-sm" href={{ path('admin.glossary.edit', {id: glossary.id}) }}>Editer</a>
+            <td>
+            {{ glossary.id }}
+            </td>
+            <td>
+                <a href={{ path('admin.glossary.edit', {id: glossary.id}) }}>{{ glossary.word }}</a>
+            </td>
+            <td>{{ glossary.content }}</td>
+              
+        <td>
+            <a class="btn btn-primary btn-sm" href={{ path('admin.glossary.edit', {id: glossary.id}) }}>Editer</a>     
              <form method="post" action={{ path('admin.glossary.delete', {id: glossary.id}) }} style="display: inline-block">
                 <input type="hidden" name="_method" value="DELETE">
                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ glossary.id) }}">
@@ -33,7 +55,13 @@
             </tr>
 
         {% endfor %}
+    </div>
+</div>
         </tbody>
     </table>
-        
+
+
+        {{ knp_pagination_render(glossaries) }}
+
+{{ include('partials/footer.html.twig') }}
 {% endblock %}

@@ -4,12 +4,23 @@
 
 {% block body %}
 
-<h1>Editer une espèce</h1>
+<div class="container m-5 p-5 bg-primary-subtle">
+    <div class="row">
+        <h1 class="text-center m-3 p-3">Editer une espèce</h1>
+        <h2 class="text-center border border-3 border-success rounded-3 p-3">{{ faunaspecie.name }}</h2>
+    </div>
 
-<h2>{{ faunaspecie.name }}</h2>
+    <div class="container bg-light p-5 rounded-3 text-center border border-5 border-primary-subtle">
+        {{ form_start(form) }}
 
-    {{ form(form) }}  
+        {{ form_row(form.name, {'label': 'Nom de l\'espèce', 'attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.save, {'label': 'Enregistrer les modifications', 'attr': {'class': 'btn btn-success'}}) }}
 
+        {{ form_end(form) }}
+
+    </div>
+
+</div>
 {{ include('partials/footer.html.twig') }}
 
 {% endblock %}

@@ -4,11 +4,24 @@
 
 {% block body %}
 
-<h1>Editer le Glossaire</h1>
-
-<h2>{{ glossary.word }}</h2>
-
-    {{ form(form) }}
+<div class="container m-5 p-5 bg-primary-subtle">
+    <div class="container">
+        <div class="row">
+            <h1 class="text-center m-3 p-3">Editer le Glossaire</h1>
+            <h2 class="text-center border border-3 border-success rounded-3 p-3">{{ glossary.word }}</h2>
+        </div>
+    
+        <div class="container bg-light p-5 rounded-3 text-center border border-5 border-primary-subtle">
+            {{ form_start(form) }}
+    
+            {{ form_row(form.word, {'label': 'Terme', 'attr': {'class': 'form-control'}}) }}
+            {{ form_row(form.content, {'label': 'Définition', 'attr': {'class': 'form-control'}}) }}
+            {{ form_row(form.save, {'label': 'Enregistrer les modifications', 'attr': {'class': 'btn btn-success'}}) }}
+    
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
 
 {{ include('partials/footer.html.twig') }}
 

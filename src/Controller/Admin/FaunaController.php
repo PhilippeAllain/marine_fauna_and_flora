@@ -11,14 +11,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/admin/faunas', name: 'admin.fauna.')]
+#[IsGranted('ROLE_ADMIN')]
 class FaunaController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(Request $request, FaunaRepository $repository, EntityManagerInterface $em): Response
+    public function index(Request $request, FaunaRepository $repository): Response
     {
-        $faunas = $repository->findAll();;
+        $page = $request->query->getInt('page', 1);
+        $limit = 1;
+        $faunas = $repository->paginateFaunas($page, $limit);
         return $this->render('admin/fauna/index.html.twig', [
             'faunas' => $faunas,            
         ]);
@@ -43,7 +47,9 @@ class FaunaController extends AbstractController
 
 
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'], requirements: ['id' => Requirement::DIGITS])]
-    public function edit(Fauna $fauna, Request $request, EntityManagerInterface $em ): Response{
+    public function edit(Fauna $fauna, Request $request, EntityManagerInterface $em)
+    {
+
         $form = $this->createForm(FaunaType::class, $fauna);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
